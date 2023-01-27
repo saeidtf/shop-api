@@ -6,3 +6,5 @@ export * from "./City";
 export * from "./Category";
 export * from "./Color";
 export * from "./Contact";
+export * from "./Discount";
+export * from "./Gallery";
