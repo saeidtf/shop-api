@@ -1,5 +1,7 @@
-import { BelongsTo, Column, Default, Length, Model, Table } from "sequelize-typescript";
-import { NewsType } from "./NewsType";
+import { BeforeCreate, BelongsTo, Column, Model, Table } from "sequelize-typescript";
+import { v4 as uuidv4 } from "uuid";
+import { User } from "./User";
+
 
 enum OrderStatusCodeType{
   Pending = 1,
@@ -51,6 +53,15 @@ export class Order extends Model {
   @Column couponCode!: string;
   @Column couponDiscount!: number;  
   @Column shippingType!: shippingTypeType;
+
+  @BelongsTo(() => User, "userId")
+  user!: User;
+
+  @BeforeCreate
+  static async generateUUID(order: Order) {
+    order.orderGuid = uuidv4();
+  }
+
 
   
 }

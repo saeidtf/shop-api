@@ -17,3 +17,4 @@ export * from "./News";
 export * from "./NewsType";
 export * from "./NewsComment";
 export * from "./Order";
+export * from "./OrderItem";
