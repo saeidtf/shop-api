@@ -1,5 +1,6 @@
 import { BeforeCreate, BelongsTo, Column, Model, Table } from "sequelize-typescript";
 import { v4 as uuidv4 } from "uuid";
+import { Address } from "./Address";
 import { User } from "./User";
 
 
@@ -57,9 +58,12 @@ export class Order extends Model {
   @BelongsTo(() => User, "userId")
   user!: User;
 
+  @BelongsTo(() => Address, "addressId")
+  address!: Address;
+
   @BeforeCreate
-  static async generateUUID(order: Order) {
-    order.orderGuid = uuidv4();
+  static async generateUUID({ order }: { order: Order; }) {
+    order.orderGuid = uuidv4();    
   }
 
 

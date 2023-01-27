@@ -11,9 +11,16 @@ import {
   BelongsTo,
   HasMany,
   DataType,
+  BelongsToMany,
 } from "sequelize-typescript";
 
 import { v4 as uuidv4 } from "uuid";
+import { Category } from "./Category";
+import { Maker } from "./Maker";
+import { MakerBrand } from "./MakerBrand";
+import { Picture } from "./Picture";
+import { PictureProduct } from "./PictureProduct";
+import { QuantityUnit } from "./QuantityUnit";
 
 @Table
 export class Product extends Model {
@@ -77,6 +84,21 @@ export class Product extends Model {
   @Column makerId!: number;
   @Column makerBrandId!: number;
   @Column isShowOldPrice!: boolean;
+
+  @BelongsTo(() => QuantityUnit, "quantityUnitId")
+  quantityUnit!: QuantityUnit;
+
+  @BelongsTo(() => Category, "categoryId")
+  category!: Category;
+
+  @BelongsTo(() => Maker, "makerId")
+  maker!: Maker;
+
+  @BelongsTo(() => MakerBrand, "makerBrandId")
+  makerBrand!: MakerBrand;
+
+  @BelongsToMany(() => Picture, () => PictureProduct)
+  pictures!: Picture[];
 
   @BeforeCreate
   static async generateUUID(product: Product) {

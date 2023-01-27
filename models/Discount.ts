@@ -11,6 +11,5 @@ export class Discount extends Model {
   @Column endDate!: number;
   @Column requiresCouponCode!: boolean;
   @Column couponCode!: string;
-  
-  
+    
 }

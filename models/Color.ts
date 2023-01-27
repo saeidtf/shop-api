@@ -1,4 +1,5 @@
-import { Column, Default, Length, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, Default, HasMany, Length, Model, Table } from "sequelize-typescript";
+import { Product } from "./Product";
 
 @Table
 export class Color extends Model {
@@ -25,5 +26,8 @@ export class Color extends Model {
   
   @Default(true)
   @Column isActive!: boolean;
+
+  @BelongsTo(() => Product, 'productId')
+  product!: Product;
   
 }

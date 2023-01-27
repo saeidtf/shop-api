@@ -34,16 +34,6 @@ export class Maker extends Model {
 
 
   @HasMany(() => MakerBrand , "makerId")
-  makerBrands!: MakerBrand[];
-
-  /**
-   *  metaKeywords: type.STRING,
-        metaDescription: type.STRING,
-        metaTitle: type.STRING,        
-        published: type.BOOLEAN,
-        deleted: type.BOOLEAN,
-        logo: type.STRING,
-        showOnHomePage: type.BOOLEAN
-   */
+  makerBrands!: MakerBrand[];  
   
 }
