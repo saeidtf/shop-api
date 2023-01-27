@@ -8,3 +8,8 @@ export * from "./Color";
 export * from "./Contact";
 export * from "./Discount";
 export * from "./Gallery";
+export * from "./Language";
+export * from "./LocaleStringResource";
+export * from "./LocalizedProperty";
+export * from "./Maker";
+export * from "./MakerBrand";
