@@ -13,3 +13,7 @@ export * from "./LocaleStringResource";
 export * from "./LocalizedProperty";
 export * from "./Maker";
 export * from "./MakerBrand";
+export * from "./News";
+export * from "./NewsType";
+export * from "./NewsComment";
+export * from "./Order";
