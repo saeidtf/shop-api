@@ -17,6 +17,7 @@ import {
   NewsType,
   Order,
   OrderItem,
+  Product,
   Province,
   Role,
   User,
@@ -47,5 +48,6 @@ export const sequelize = new Sequelize({
     NewsComment,
     Order,
     OrderItem,
+    Product,
   ],
 });
