@@ -1,3 +1,5 @@
 export * from './userController'
 export * from './attributeController'
 export * from './categoryController'
+export * from './cityController'
+export * from './contactController'
