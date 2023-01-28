@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { Role } from "../models";
 import { User } from "../models/User";
+import {loginByEmail , loginByPhone} from "../controllers";
 
 export const userRouter = () => Router()
   .get("/", async (req: Request, res: Response) => {
@@ -23,4 +24,5 @@ export const userRouter = () => Router()
 
     const user = await User.create({ email, password, name, surName, phone, mobile, address , isActive:true , roleId:2 });
     res.send(user);
-  });
+  })
+  .post("/login", loginByPhone);

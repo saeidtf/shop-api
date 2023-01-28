@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
 import { Role } from "./Role";
 import { Address } from "./Address";
+import jwt from "jsonwebtoken";
 
 @Table
 export class User extends Model {
@@ -47,17 +48,23 @@ export class User extends Model {
   @Length({ max: 8 })
   @Column userKey!: string;
 
-  @Length({ max: 8 })
-  @Column moaref!: string;
+  @Length({ max: 100 })
+  @Column presenter!: string;
 
 
   @BeforeCreate
   static async hashPassword(user: User) {
+    if (!user.password) {
+      return;
+    }
     user.password = await bcrypt.hash(user.password, 10);
   }
 
   @BeforeUpdate
   static async hashPasswordUpdate(user: User) {
+    if (!user.password) {
+      return;
+    }
     if (user.changed("password")) {
       user.password = await bcrypt.hash(user.password, 10);
     }
@@ -73,5 +80,15 @@ export class User extends Model {
 
   @HasMany(() => Address , "userId")
   addresses!: Address[];
+
+  async validatePassword(password: string) {
+    return await bcrypt.compare(password, this.password);
+  }
+
+  async generateToken() {        
+    return jwt.sign({ id: this.id , email:this.email }, process.env.TOKEN_SECRET!, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    });       
+  }
 
 }

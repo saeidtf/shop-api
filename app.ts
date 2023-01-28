@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import routers from "./routers";
 import { sequelize } from "./lib/database/sequelize";
 import { Role } from "./models";
-import { migrate } from "./models/Seed";
+import { migrate } from "./lib/database/Seed";
 
 dotenv.config();
 
