@@ -7,8 +7,7 @@ export class Maker extends Model {
   @Length({ max: 100 })
   @Column name!: string;
 
-  @Default("/images/no-photo.jpg")
-  @Length({ max: 100 })
+  @Default("/images/no-photo.jpg")  
   @Column image!: string;
 
   @Default(1)
