@@ -16,11 +16,17 @@ import {
 
 import { v4 as uuidv4 } from "uuid";
 import { Category } from "./Category";
+import { Discount } from "./Discount";
 import { Maker } from "./Maker";
 import { MakerBrand } from "./MakerBrand";
 import { Picture } from "./Picture";
 import { PictureProduct } from "./PictureProduct";
+import { ProductAttributeOption } from "./ProductAttributeOption";
+import { ProductDiscount } from "./ProductDiscount";
+import { ProductTag } from "./ProductTag";
 import { QuantityUnit } from "./QuantityUnit";
+import { SpecificationAttributeOption } from "./SpecificationAttributeOption";
+import { Tag } from "./Tag";
 
 @Table
 export class Product extends Model {
@@ -28,8 +34,8 @@ export class Product extends Model {
   @PrimaryKey
   @Column
   id!: string;
-
-  @Column productId!: number;
+  
+  @Column productNumber!: number;
   @Column name!: string;
   @Column shortDescription!: string;
   @Column(DataType.TEXT) fullDescription!: string;
@@ -82,7 +88,6 @@ export class Product extends Model {
 
   @Column categoryId!: number;
   @Column makerId!: number;
-  @Column makerBrandId!: number;
   @Column isShowOldPrice!: boolean;
 
   @BelongsTo(() => QuantityUnit, "quantityUnitId")
@@ -94,20 +99,29 @@ export class Product extends Model {
   @BelongsTo(() => Maker, "makerId")
   maker!: Maker;
 
-  @BelongsTo(() => MakerBrand, "makerBrandId")
-  makerBrand!: MakerBrand;
 
   @BelongsToMany(() => Picture, () => PictureProduct)
   pictures!: Picture[];
 
+  @BelongsToMany(() => Tag, () => ProductTag)
+  tags!: Tag[];
+
+  @BelongsToMany(() => SpecificationAttributeOption, () => ProductAttributeOption)
+  specificationAttributeOptions!: SpecificationAttributeOption[];
+
+  @BelongsToMany(() => Discount, () => ProductDiscount)
+  discounts!: Discount[];
+
+
+
   @BeforeCreate
   static async generateUUID(product: Product) {
     product.id = uuidv4();    
-    product.productId = await Product.findOne({
+    product.productNumber = await Product.findOne({
       order: [["productId", "DESC"]],
     }).then((product) => {
       if (product) {
-        return product.productId + 1;
+        return product.productNumber + 1;
       } else {
         return 1;
       }

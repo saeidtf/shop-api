@@ -1,4 +1,8 @@
-import { Column, Default, Length, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, Default, Length, Model, Table } from "sequelize-typescript";
+import { Category } from "./Category";
+import { CategoryDiscount } from "./CategoryDiscount";
+import { Product } from "./Product";
+import { ProductDiscount } from "./ProductDiscount";
 
 @Table
 export class Discount extends Model {
@@ -11,5 +15,13 @@ export class Discount extends Model {
   @Column endDate!: number;
   @Column requiresCouponCode!: boolean;
   @Column couponCode!: string;
+
+
+  @BelongsToMany(() => Category, () => CategoryDiscount)
+  categories!: Category[];
+
+  @BelongsToMany(() => Product, () => ProductDiscount)
+  products!: Product[];
+
     
 }

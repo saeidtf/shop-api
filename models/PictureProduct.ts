@@ -9,7 +9,7 @@ export class PictureProduct extends Model {
   @Column pictureId!: number;
 
   @ForeignKey(() => Product)
-  @Column productId!: number;
+  @Column productId!: string;
   
   @Column colorId!: number;
   @Column displayOrder!: number;

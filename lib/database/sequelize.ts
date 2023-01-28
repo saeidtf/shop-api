@@ -2,6 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 import {
   Address,
   Category,
+  CategoryDiscount,
   City,
   Color,
   Contact,
@@ -19,7 +20,11 @@ import {
   OrderItem,
   Payment,
   Picture,
+  PictureProduct,
   Product,
+  ProductAttributeOption,
+  ProductDiscount,
+  ProductTag,
   Province,
   QuantityUnit,
   Role,
@@ -68,6 +73,11 @@ export const sequelize = new Sequelize({
     SpecificationAttributeOption,
     Tag,
     TaxCategory,
-    Ticket
+    Ticket,
+    PictureProduct,
+    ProductAttributeOption,
+    ProductTag,
+    CategoryDiscount,
+    ProductDiscount
   ],
 });

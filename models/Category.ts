@@ -1,4 +1,6 @@
-import { Column, DataType, Default, Length, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, Default, Length, Model, Table } from "sequelize-typescript";
+import { CategoryDiscount } from "./CategoryDiscount";
+import { Discount } from "./Discount";
 
 @Table
 export class Category extends Model {
@@ -26,5 +28,8 @@ export class Category extends Model {
 
   @Default(false)
   @Column deleted!: boolean;
+
+  @BelongsToMany(() => Discount, () => CategoryDiscount)
+  discounts!: Discount[];
 
 }

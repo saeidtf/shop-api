@@ -1,4 +1,6 @@
-import { BelongsTo, Column, Model, Table } from "sequelize-typescript";
+import { BelongsTo, BelongsToMany, Column, Model, Table } from "sequelize-typescript";
+import { Product } from "./Product";
+import { ProductAttributeOption } from "./ProductAttributeOption";
 import { SpecificationAttribute } from "./SpecificationAttribute";
 
 @Table
@@ -9,4 +11,9 @@ export class SpecificationAttributeOption extends Model {
 
   @BelongsTo(() => SpecificationAttribute, 'specificationAttributeId')
   specificationAttribute!: SpecificationAttribute;
+
+  @BelongsToMany(() => Product, () => ProductAttributeOption)
+  products!: Product[];
+
+  
 }

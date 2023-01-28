@@ -29,3 +29,8 @@ export * from "./SpecificationAttributeOption";
 export * from "./Tag";
 export * from "./TaxCategory";
 export * from "./Ticket";
+export * from "./PictureProduct";
+export * from "./ProductAttributeOption";
+export * from "./ProductTag";
+export * from "./CategoryDiscount";
+export * from "./ProductDiscount";
