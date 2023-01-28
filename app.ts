@@ -1,11 +1,12 @@
-import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
-import helmet from "helmet";
 import dotenv from "dotenv";
-import routers from "./routers";
-import { sequelize } from "./lib/database/sequelize";
-import { Role } from "./models";
+import express, { Application, NextFunction, Request, Response } from "express";
+import helmet from "helmet";
 import { migrate } from "./lib/database/Seed";
+import { sequelize } from "./lib/database/sequelize";
+import routers from "./routers";
+import fileUpload from "express-fileupload";
+import path from "path";
 
 dotenv.config();
 
@@ -17,6 +18,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(helmet());
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
+}));
+
+app.use(express.static(path.join(__dirname, "public")));
 
 routers(app);
 

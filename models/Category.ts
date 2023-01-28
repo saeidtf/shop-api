@@ -29,6 +29,9 @@ export class Category extends Model {
 
   @Default(false)
   @Column deleted!: boolean;
+  
+  @Default(null)
+  @Column parentId!: number | null;
 
   @BelongsToMany(() => Discount, () => CategoryDiscount)
   discounts!: Discount[];

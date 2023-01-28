@@ -55,7 +55,7 @@ export const getCategory = async (req: Request, res: Response) => {
 };
 
 export const createCategory = async (req: Request, res: Response) => {
-  const {
+  let {
     name,
     description,
     metaKeywords,
@@ -67,7 +67,32 @@ export const createCategory = async (req: Request, res: Response) => {
     displayOrder,
     published,
     path,
+    parentId
   } = req.body;
+
+  const files = req.files;
+  if (files) {
+    const imageFile = files?.image as any;
+    const iconFile = files?.icon as any;
+    image = imageFile.name;
+    icon = iconFile.name;
+
+    imageFile?.mv(`./public/images/categories/${imageFile.name}`, (err: any) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    iconFile?.mv(
+      `./public/images/categories/icons/${iconFile.name}`,
+      (err: any) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  }
+
   const category = await Category.create({
     name,
     description,
@@ -80,6 +105,7 @@ export const createCategory = async (req: Request, res: Response) => {
     displayOrder,
     published,
     path,
+    parentId
   });
 
   return responseSuccess(res, category);
@@ -87,7 +113,7 @@ export const createCategory = async (req: Request, res: Response) => {
 
 export const updateCategory = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const {
+  let {
     name,
     description,
     metaKeywords,
@@ -99,6 +125,7 @@ export const updateCategory = async (req: Request, res: Response) => {
     displayOrder,
     published,
     path,
+    parentId,
   } = req.body;
   const category = await Category.findByPk(id);
   if (!category) {
@@ -117,6 +144,29 @@ export const updateCategory = async (req: Request, res: Response) => {
     return responseFailed(res, "Category already exist");
   }
 
+  const files = req.files;
+  if (files) {
+    const imageFile = files?.image as any;
+    const iconFile = files?.icon as any;
+    image = imageFile.name;
+    icon = iconFile.name;
+
+    imageFile?.mv(`public/images/categories/${imageFile.name}`, (err: any) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
+    iconFile?.mv(
+      `public/images/categories/icons/${iconFile.name}`,
+      (err: any) => {
+        if (err) {
+          console.log(err);
+        }
+      }
+    );
+  }
+
   category.name = name;
   category.description = description;
   category.metaKeywords = metaKeywords;
@@ -128,6 +178,7 @@ export const updateCategory = async (req: Request, res: Response) => {
   category.displayOrder = displayOrder;
   category.published = published;
   category.path = path;
+  category.parentId = parentId;
   await category.save();
 
   return responseSuccess(res, category);
@@ -263,5 +314,3 @@ export const removeProductFromCategory = async (
 
   return responseSuccess(res, category);
 };
-
-
